@@ -14,5 +14,6 @@ namespace GameLib {
 		if (!im) {//如果image不存在
 			im = new Image("bar.dds");
 		}
+		im->draw(0,0,im->getWidth(), im->getHeight());
 	}
 }
