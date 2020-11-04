@@ -31,7 +31,8 @@ int Image::getWidth() const {
 	return mWidth;
 }
 
-void Image::draw(int dstX, int dstY, int width, int height) const {
+void Image::draw(int dstX, int dstY, int srcX,
+	int srcY, int width, int height) const {
 	//获取Framework的 videoMemory实例；
 	unsigned* vram = Framework::instance().videoMemory();
 	//获取Framework的 窗口宽度
@@ -39,7 +40,7 @@ void Image::draw(int dstX, int dstY, int width, int height) const {
 	for (int y = 0; y < height; ++y) {
 		for (int x = 0; x < width; ++x) {
 			unsigned int* dst = &vram[(y+dstY) * windowWidth + (x+dstX)];
-			*dst = mData[y * mWidth + x];
+			*dst = mData[(y+srcY) * mWidth + (x+srcX)];
 		}
 	}
 }

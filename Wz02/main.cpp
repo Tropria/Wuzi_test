@@ -1,5 +1,5 @@
-#include "Image.h"
-#include "Array2D.h"
+#include "File.h"
+#include "State.h"
 
 #include <iostream>
 #include "GameLib/Framework.h"
@@ -7,18 +7,52 @@
 using namespace GameLib;
 
 //函数原型 in Update
-//void mainLoop();
-//void draw();
-Image *im;
+void mainLoop();
+
+//全局变量state
+State* gState = 0;
+
 
 namespace GameLib {
 	void Framework::update() {
-		if (!im) {//如果image不存在
-			im = new Image("bar.dds");
-
-			Array2D<int> a2d;
-			const int& a = a2d(0, 0);
-		}
-		im->draw(0,0,im->getWidth(), im->getHeight());
+		mainLoop();
 	}
+}
+
+void mainLoop() {
+	//×按钮被按下了吗？
+	if (Framework::instance().isEndRequested()) {
+		if (gState) {
+			delete gState;
+			gState = 0;
+		}
+		return;
+	}
+	//初始化第一帧。绘制第一个状态并完成。
+	if (!gState) {
+		//File file("stageData.txt");
+		//if (!(file.data())) { //没有数据！
+		//	cout << "stage file could not be read." << endl;
+		//	return;
+		//}
+		gState = new State();
+		//第一绘制
+		gState->draw();
+		return; //结束
+	}
+	//获取输入
+	cout << "a:left d:right w:up s:down. command?" << endl; //操作说明
+	char input;
+	cin >> input;
+	//结束判断
+	if (input == 'q') {
+		delete gState;
+		gState = 0;
+		Framework::instance().requestEnd();
+		return;
+	}
+	//更新
+	gState->update(input);
+	//绘制
+	gState->draw();
 }

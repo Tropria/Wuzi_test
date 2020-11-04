@@ -10,6 +10,8 @@ public:
 	void draw(
 		int dstX,
 		int dstY,
+		int srcX,
+		int srcY,
 		int width,
 		int height
 	)const;
