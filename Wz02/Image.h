@@ -13,8 +13,7 @@ public:
 		int srcX,
 		int srcY,
 		int width,
-		int height
-	)const;
+		int height )const;
 
 private:
 	int mWidth; // member width

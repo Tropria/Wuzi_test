@@ -20,6 +20,8 @@ namespace GameLib {
 }
 
 void mainLoop() {
+	//检查是否结束
+	bool cleared = false;
 	//×按钮被按下了吗？
 	if (Framework::instance().isEndRequested()) {
 		if (gState) {
@@ -40,6 +42,7 @@ void mainLoop() {
 		gState->draw();
 		return; //结束
 	}
+	
 	//获取输入
 	cout << "a:left d:right w:up s:down. command?" << endl; //操作说明
 	char input;
@@ -55,4 +58,15 @@ void mainLoop() {
 	gState->update(input);
 	//绘制
 	gState->draw();
+
+	if (gState->isOver()) {
+		cleared = true;
+	}
+	if (cleared) {
+		cout << "Congratulation! you win. Input any char to continue" << endl;
+		char temp;
+		cin >> temp;
+		delete gState;
+		gState = 0;
+	}
 }

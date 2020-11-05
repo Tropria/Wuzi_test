@@ -10,8 +10,8 @@ mHeight(0),
 mData(0)
 {
 	File file(fileName);
-	mWidth = file.getUnsignedInt(12);//DDS图片格式
-	mHeight = file.getUnsignedInt(16);
+	mHeight = file.getUnsignedInt(12);//DDS图片格式 先高 
+	mWidth = file.getUnsignedInt(16);//后宽度
 	mData = new unsigned[mWidth * mHeight];
 	for (int i = 0; i < mWidth * mHeight; ++i) {
 		mData[i] = file.getUnsignedInt(128 + i*4);

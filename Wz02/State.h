@@ -11,7 +11,8 @@ public:
 	~State();
 	void update(char input);
 	void draw() const;
-	bool hasCleared() const;
+	bool isOver() const;//检查是否一方胜出
+	int getCurColor();
 private:
 	enum Object {
 		OBJ_WHITE,
@@ -24,17 +25,21 @@ private:
 	enum ImageID {
 		IMG_ID_WHITE,
 		IMG_ID_BLACK,
-		IMG_ID_CURSOR,
 		IMG_ID_LAST,
 		IMG_ID_BLUE,
+		IMG_ID_CURSOR,
 		IMG_ID_SPACE
 	};
-
+	
 	void drawCell(int x, int y, ImageID) const;
+	void changeColor();//交换行动顺序
+	bool checkIsFive(int x, int y) const;//辅助函数：检查当前子是否满足5连
+	
 
 	int mWidth;
 	int mHeight;
 	Array2D< Object > mObjects;
+	unsigned int curColor;//当前行动的一方的颜色 0 white 1 black
 	int x_cursor;
 	int y_cursor;
 
