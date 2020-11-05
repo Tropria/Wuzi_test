@@ -11,7 +11,8 @@ void mainLoop();
 
 //全局变量state
 State* gState = 0;
-
+//检查是否结束
+bool cleared = false;
 
 namespace GameLib {
 	void Framework::update() {
@@ -20,8 +21,14 @@ namespace GameLib {
 }
 
 void mainLoop() {
-	//检查是否结束
-	bool cleared = false;
+	if (cleared) {
+		cout << "Congratulation! you win. Input any char to continue" << endl;
+		char temp;
+		cin >> temp;
+		delete gState;
+		gState = 0;
+		cleared = false;
+	}
 	//×按钮被按下了吗？
 	if (Framework::instance().isEndRequested()) {
 		if (gState) {
@@ -62,11 +69,5 @@ void mainLoop() {
 	if (gState->isOver()) {
 		cleared = true;
 	}
-	if (cleared) {
-		cout << "Congratulation! you win. Input any char to continue" << endl;
-		char temp;
-		cin >> temp;
-		delete gState;
-		gState = 0;
-	}
+	
 }
