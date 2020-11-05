@@ -39,8 +39,12 @@ void Image::draw(int dstX, int dstY, int srcX,
 	unsigned windowWidth = Framework::instance().width();
 	for (int y = 0; y < height; ++y) {
 		for (int x = 0; x < width; ++x) {
-			unsigned int* dst = &vram[(y+dstY) * windowWidth + (x+dstX)];
-			*dst = mData[(y+srcY) * mWidth + (x+srcX)];
+			//Ìí¼ÓalphaÍ¨µÀ
+			unsigned int src = mData[(y + srcY) * mWidth + (x + srcX)];
+			if (src & 0x80000000) {
+				unsigned* dst = &vram[(y + dstY) * windowWidth + (x + dstX)];
+				*dst = src;
+			}
 		}
 	}
 }

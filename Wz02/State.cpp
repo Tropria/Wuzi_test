@@ -16,7 +16,7 @@ State::State() {
 		}
 	}
 	//图片载入
-	mImage = new Image("wz_material_16bit.dds");
+	mImage = new Image("nimotsuKunImage2_16bit.dds");
 	curColor = OBJ_BLACK;
 }
 
@@ -41,9 +41,10 @@ void State::draw() const {
 			case OBJ_WHITE: id = IMG_ID_WHITE; break;
 			case OBJ_BLACK: id = IMG_ID_BLACK; break;
 			}
-			drawCell(x, y, id);
+			if(id!=IMG_ID_SPACE) drawCell(x, y, id);
 		}
 	}
+
 	//最后我们画好光标.可能会覆盖掉当前图片
 	drawCell(x_cursor, y_cursor, IMG_ID_CURSOR);
 }

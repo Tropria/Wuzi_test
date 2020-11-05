@@ -25,9 +25,9 @@ private:
 	enum ImageID {
 		IMG_ID_WHITE,
 		IMG_ID_BLACK,
-		IMG_ID_LAST,
-		IMG_ID_BLUE,
 		IMG_ID_CURSOR,
+		IMG_ID_LAST,
+		
 		IMG_ID_SPACE
 	};
 	
