@@ -1,11 +1,13 @@
 #include "State.h"
 #include "Image.h"
+#include <iostream>
+#include "alphabeta.h"
 
 //生成空棋盘
 State::State() {
 	//设置起始光标位置、棋盘大小等
-	x_cursor = 6;
-	y_cursor = 6;
+	x_cursor = 7;
+	y_cursor = 7;
 	mWidth = 15;
 	mHeight = 15;
 	mObjects.setSize(mWidth, mHeight);
@@ -29,6 +31,7 @@ State::~State() {
 //绘制
 //working
 void State::draw() const {
+	std::cout << "mHeight " << mHeight << " mWidth " << mWidth << std::endl;
 	for (int y = 0; y < mHeight; ++y) {
 		for (int x = 0; x < mWidth; ++x) {
 			//首先画好space
@@ -63,6 +66,27 @@ void State::changeColor() {
 //主逻辑
 //TODO
 void State::update(int moveX, int moveY, bool isSet) {
+	if (curColor == 1) {
+		//如果当前轮到白棋（AI）走
+
+		//先将mObjects转化成int a[15][15]的棋盘，作为参数传入TreeNode
+		int board[15][15];
+		for (int j = 0; j < mHeight; ++j) {
+			for (int i = 0; i < mWidth; ++i) {
+				if (mObjects(i, j) == OBJ_SPACE) board[j][i] = 0;
+				if (mObjects(i, j) == OBJ_WHITE) board[j][i] = 1;
+				if (mObjects(i, j) == OBJ_BLACK) board[j][i] = 2;
+			}
+		}
+		TreeNode* root = new TreeNode(board, BLACK);
+		//将上一次玩家的颜色，即黑色作为curColor
+		//使用上次最后落子的位置，即x_cursor, y_cursor修改TreeNode的最后落子位置 x_last, y_last
+		root->x_last = x_cursor;
+		root->y_last = y_cursor;
+
+		changeColor();
+		return;
+	}
 	//移动差分变换
 	int dx = moveX;
 	int dy = moveY;
@@ -101,7 +125,7 @@ void State::update(int moveX, int moveY, bool isSet) {
 bool State::isOver() const {
 	for (int y = 0; y < mHeight; ++y) {
 		for (int x = 0; x < mWidth; ++x) {
-			if (checkIsFive(x, y)) return true;
+			if (state_checkIsFive(x, y)) return true;
 		}
 	}
 	return false;
@@ -125,7 +149,7 @@ State::State(const char* stageData) {
 	//从stageData读取棋谱
 }
 
-bool State::checkIsFive(int x, int y) const {
+bool State::state_checkIsFive(int x, int y) const {
 	Object o = mObjects(x, y);
 	//检查是否是黑or白
 	if (o != OBJ_BLACK && o != OBJ_WHITE) return false;

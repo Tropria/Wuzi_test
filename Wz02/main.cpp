@@ -86,6 +86,7 @@ void mainLoop() {
 	gPrevInputW = inputW;
 	gPrevInputD = inputD;
 	gPrevInputC = inputC;
+
 	//结束判断
 	if (f.isKeyOn('q')) {
 		delete gState;
@@ -93,10 +94,12 @@ void mainLoop() {
 		Framework::instance().requestEnd();
 		return;
 	}
+
 	//更新
 	gState->update(dx, dy, inputC);
 	//绘制
 	gState->draw();
+
 
 	if (gState->isOver()) {
 		cleared = true;

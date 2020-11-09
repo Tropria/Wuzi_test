@@ -33,7 +33,7 @@ private:
 	
 	void drawCell(int x, int y, ImageID) const;
 	void changeColor();//交换行动顺序
-	bool checkIsFive(int x, int y) const;//辅助函数：检查当前子是否满足5连
+	bool state_checkIsFive(int x, int y) const;//辅助函数：检查当前子是否满足5连
 	
 
 	int mWidth;

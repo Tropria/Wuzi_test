@@ -157,6 +157,7 @@
     <ClInclude Include="Wz02.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="alphabeta.cpp" />
     <ClCompile Include="File.cpp" />
     <ClCompile Include="Image.cpp" />
     <ClCompile Include="main.cpp" />
