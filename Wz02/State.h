@@ -9,7 +9,7 @@ public:
 	State();//默认构造空棋盘
 	State(const char* stageData);//从文件读取棋谱
 	~State();
-	void update(char input);
+	void update(int moveX, int moveY, bool isSet);
 	void draw() const;
 	bool isOver() const;//检查是否一方胜出
 	int getCurColor();

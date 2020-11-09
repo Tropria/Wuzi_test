@@ -62,18 +62,12 @@ void State::changeColor() {
 
 //主逻辑
 //TODO
-void State::update(char input) {
+void State::update(int moveX, int moveY, bool isSet) {
 	//移动差分变换
-	int dx = 0;
-	int dy = 0;
-	bool isSetChess = false;
-	switch (input) {
-	case 'a': dx = -1; break; //向左
-	case 'd': dx = 1; break; //右
-	case 'w': dy = -1; break; //上。Y朝下为正
-	case 's': dy = 1; break; //下。
-	case 'c': isSetChess = true; break; // c 落子
-	}
+	int dx = moveX;
+	int dy = moveY;
+	bool isSetChess = isSet;
+
 	//使用简短的变量名。
 	int w = mWidth;
 	int h = mHeight;
