@@ -110,9 +110,9 @@ int evaluation_0(const TreeNode* tn) {
         for (int x = x_min; x <= x_max; ++x) {
             int winColor = checkIsFive(tn->board, x, y);
             if (winColor == WHITE)
-                return INT_MAX;
+                return 10000;
             if (winColor == BLACK)
-                return INT_MIN;
+                return -10000;
             // int winColor2 = checkIsFourAlive(tn->board, x, y);
             // if (winColor2 == WHITE)
             //     return INT_MAX;

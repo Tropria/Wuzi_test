@@ -67,7 +67,7 @@ void State::changeColor() {
 //主逻辑
 //TODO
 void State::update(int moveX, int moveY, bool isSet) {
-	if (curColor == 1) {
+	if (curColor == OBJ_WHITE) {
 		//如果当前轮到白棋（AI）走
 
 		//先将mObjects转化成int a[15][15]的棋盘，作为参数传入TreeNode
@@ -86,7 +86,8 @@ void State::update(int moveX, int moveY, bool isSet) {
 		root->y_last = y_cursor;
 		int eva = alphabeta(root, DEPTH, INT_MIN, INT_MAX, WHITE);
 		//在root->x_next, root->y_next处落白子
-		mObjects(root->x_next, root->y_next) = static_cast<Object>(curColor);
+		std::cout << "I want to set " << root->x_next << "," << root->y_next << std::endl;
+		mObjects(root->x_next, root->y_next) = OBJ_WHITE;
 
 		changeColor();
 		return;
