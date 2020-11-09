@@ -66,6 +66,9 @@
     <ClCompile Include="State.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
+    <ClCompile Include="alphabeta.h">
+      <Filter>Source Files</Filter>
+    </ClCompile>
     <ClCompile Include="alphabeta.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>

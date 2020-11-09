@@ -1,2 +1,9 @@
-﻿  State.cpp
+﻿  alphabeta.cpp
+  alphabeta.h
+  File.cpp
+  Image.cpp
+  main.cpp
+  State.cpp
+  Generating Code...
+Debug\alphabeta.obj : warning LNK4042: object specified more than once; extras ignored
   Wz02.vcxproj -> C:\Users\nyf\source\repos\temp_test\Wuzi_test\Debug\Wz02.exe

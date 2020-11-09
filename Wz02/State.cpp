@@ -3,6 +3,7 @@
 #include <iostream>
 #include "alphabeta.h"
 
+
 //生成空棋盘
 State::State() {
 	//设置起始光标位置、棋盘大小等
@@ -83,6 +84,9 @@ void State::update(int moveX, int moveY, bool isSet) {
 		//使用上次最后落子的位置，即x_cursor, y_cursor修改TreeNode的最后落子位置 x_last, y_last
 		root->x_last = x_cursor;
 		root->y_last = y_cursor;
+		int eva = alphabeta(root, DEPTH, INT_MIN, INT_MAX, WHITE);
+		//在root->x_next, root->y_next处落白子
+		mObjects(root->x_next, root->y_next) = static_cast<Object>(curColor);
 
 		changeColor();
 		return;
