@@ -13,6 +13,10 @@ public:
 	void draw() const;
 	bool isOver() const;//检查是否一方胜出
 	int getCurColor();
+
+	int mMoveCount;
+	int mMoveX;
+	int mMoveY;
 private:
 	enum Object {
 		OBJ_WHITE,
@@ -30,8 +34,9 @@ private:
 		
 		IMG_ID_SPACE
 	};
-	
 	void drawCell(int x, int y, ImageID) const;
+	//移动Cursor
+	void drawCursor(int x, int y, int moveCount) const;
 	void changeColor();//交换行动顺序
 	bool state_checkIsFive(int x, int y) const;//辅助函数：检查当前子是否满足5连
 	
@@ -43,7 +48,9 @@ private:
 	int x_cursor;
 	int y_cursor;
 
-	Image* mImage;
+	Image* mImage; //图片
+
+	
 };
 
 #endif

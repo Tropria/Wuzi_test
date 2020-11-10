@@ -29,6 +29,7 @@ namespace GameLib {
 
 void mainLoop() {
 	Framework f = Framework::instance();
+
 	if (f.isKeyOn('r')) {
 		delete gState;
 		gState = 0;
@@ -97,6 +98,8 @@ void mainLoop() {
 
 	//¸üÐÂ
 	gState->update(dx, dy, inputC);
+	//cout << "Current mMoveCount " << gState->mMoveCount <<"dx, dy =("<<gState->mMoveX<<","<<gState->mMoveY<<")" <<endl;
+	
 	//»æÖÆ
 	gState->draw();
 

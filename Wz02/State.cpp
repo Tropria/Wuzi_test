@@ -3,7 +3,6 @@
 #include <iostream>
 #include "alphabeta.h"
 
-
 //生成空棋盘
 State::State() {
 	//设置起始光标位置、棋盘大小等
@@ -21,6 +20,10 @@ State::State() {
 	//图片载入
 	mImage = new Image("nimotsuKunImage2_16bit.dds");
 	curColor = OBJ_BLACK;
+
+	mMoveCount = 0;
+	mMoveX = 0;
+	mMoveY = 0;
 }
 
 State::~State() {
@@ -29,10 +32,11 @@ State::~State() {
 	//注意这里自动析构了 Array<Object> ，无需手动析构
 }
 
+
+
 //绘制
 //working
 void State::draw() const {
-	std::cout << "mHeight " << mHeight << " mWidth " << mWidth << std::endl;
 	for (int y = 0; y < mHeight; ++y) {
 		for (int x = 0; x < mWidth; ++x) {
 			//首先画好space
@@ -50,8 +54,17 @@ void State::draw() const {
 	}
 
 	//最后我们画好光标.可能会覆盖掉当前图片
-	drawCell(x_cursor, y_cursor, IMG_ID_CURSOR);
+	//drawCell(x_cursor, y_cursor, IMG_ID_CURSOR);
+	drawCursor(x_cursor, y_cursor, mMoveCount);
 }
+
+void State::drawCursor(int x, int y, int moveCount) const {
+	//只有cursor移动
+	int dx = mMoveX * (16 - moveCount);
+	int dy = mMoveY * (16 - moveCount);
+	mImage->draw(x * 16 - dx, y * 16 - dy, IMG_ID_CURSOR * 16, 0, 16, 16);
+}
+
 
 //在（x, y）处画好一个图片
 void State::drawCell(int x, int y, ImageID id) const {
@@ -67,6 +80,17 @@ void State::changeColor() {
 //主逻辑
 //TODO
 void State::update(int moveX, int moveY, bool isSet) {
+	if (mMoveCount == 16) {
+		mMoveCount = 0;
+		mMoveX = 0;
+		mMoveY = 0;
+	}
+	//移动时请勿更新
+	if (mMoveCount > 0) {
+		++mMoveCount;
+		return;
+	}
+
 	if (curColor == OBJ_WHITE) {
 		//如果当前轮到白棋（AI）走
 
@@ -86,12 +110,14 @@ void State::update(int moveX, int moveY, bool isSet) {
 		root->y_last = y_cursor;
 		int eva = alphabeta(root, DEPTH, INT_MIN, INT_MAX, WHITE);
 		//在root->x_next, root->y_next处落白子
-		std::cout << "I want to set " << root->x_next << "," << root->y_next << std::endl;
+		//std::cout << "I want to set " << root->x_next << "," << root->y_next << std::endl;
 		mObjects(root->x_next, root->y_next) = OBJ_WHITE;
 
 		changeColor();
 		return;
 	}
+	
+	
 	//移动差分变换
 	int dx = moveX;
 	int dy = moveY;
@@ -114,6 +140,10 @@ void State::update(int moveX, int moveY, bool isSet) {
 		return;
 	}
 	x_cursor = tx; y_cursor = ty;
+	mMoveX = dx; mMoveY = dy;
+	if(dx!=0 || dy!=0){	
+		mMoveCount = 1; //开始移动
+	}
 	//落子
 	if (isSetChess) {
 		//检查当前是否可以落子

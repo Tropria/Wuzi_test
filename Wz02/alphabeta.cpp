@@ -1,5 +1,6 @@
 #include "alphabeta.h"
 #include <iostream>
+#include <cstdlib>
 #include <limits.h>
 
 //以该点为目标，向右 右下 下 左下 遍历是否存在5连
@@ -127,8 +128,18 @@ int evaluation_0(const TreeNode* tn) {
             // }
             //对与（y_last, x_last）相同直线上的棋子增加权重
             if (tn->board[y][x] != 0 && isOnSameLine(tn->x_last, tn->y_last, x, y)) {
-                if (curColor == 1) { score += 1; continue; }
-                if (curColor == 2) { score -= 1; continue; }
+                if (curColor == 1) { 
+                    score += 1;
+                    /*score += 15-abs(x - tn->x_last); 
+                    score += 15-abs(y - tn->y_last);*/
+                    continue; 
+                }
+                if (curColor == 2) { 
+                    score -= 1;
+                    /*score -= 15-abs(x - tn->x_last);
+                    score -= 15-abs(y - tn->y_last);*/
+                    continue; 
+                }
 
                 // //两者都为white，则倾向白 +1
                 // if (tn->board[y][x] == 1 && curColor == 1) { score += 1; continue; }
