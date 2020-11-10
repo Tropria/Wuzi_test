@@ -21,14 +21,29 @@ bool gPrevInputC = false;
 //检查是否结束
 bool cleared = false;
 
+unsigned gPreviousTime[10]; //10记录框架时间
+
 namespace GameLib {
 	void Framework::update() {
+		sleep(1);
+		unsigned curTime = time();
+		unsigned frameTime = curTime - gPreviousTime[0]; //注意这里过了10帧
+		for (int i = 0; i < 10-1; ++i) {
+			gPreviousTime[i] = gPreviousTime[i + 1];
+		}
+		gPreviousTime[10-1] = curTime;
+		unsigned frameRate = 1000*10 / frameTime;
+		cout << "Current frame rate: " << frameRate << endl;
+
 		mainLoop();
+		
 	}
 }
 
 void mainLoop() {
 	Framework f = Framework::instance();
+
+	
 
 	if (f.isKeyOn('r')) {
 		delete gState;
